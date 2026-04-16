@@ -7,7 +7,8 @@ const {
     getAllNotes,
     getNotesById,
     replaceNote,
-    updateSpecificFields
+    updateSpecificFields,
+    deleteNote
 } = require('../controllers/note.controller');
 
 // CRUD routes
@@ -17,5 +18,6 @@ router.get('/', getAllNotes);
 router.get('/:id', getNotesById);
 router.put('/:id', replaceNote);
 router.patch('/:id', updateSpecificFields);
+router.delete('/:id', deleteNote);
 
 module.exports = router;

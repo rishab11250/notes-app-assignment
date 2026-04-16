@@ -65,4 +65,15 @@ const updateSpecificFields = async(req,res) =>{
         res.status(500).json({success: false, message: "Error updating note", data: err});
     }
 }
-module.exports = { createNote, createBulkNotes, getAllNotes, getNotesById, replaceNote, updateSpecificFields };
+
+const deleteNote = async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const note = await Note.findByIdAndDelete(id);
+        res.status(200).json({success: true, message: "Note deleted successfully", data: null});
+    }catch(err){
+        res.status(500).json({success: false, message: "Error deleting note", data: err});
+    }
+}
+
+module.exports = { createNote, createBulkNotes, getAllNotes, getNotesById, replaceNote, updateSpecificFields, deleteNote };
