@@ -33,4 +33,15 @@ const getAllNotes = async (req, res) => {
     }
 };
 
-module.exports = { createNote, createBulkNotes, getAllNotes };
+const getNotesById = async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const note = await Note.findById(id);
+        res.status(200).json({success: true, message: 'Note fetched successfully', data: note });
+    }
+    catch(err){
+        res.status(500).json({success: false, message: 'Error retrieving note', data: err });
+    }
+}
+
+module.exports = { createNote, createBulkNotes, getAllNotes, getNotesById };
