@@ -5,21 +5,12 @@ const connectDB = async () => {
     const localUri = 'mongodb://localhost:27017/notes-app';
 
     try {
-        if (uri) {
-            await mongoose.connect(uri);
-            console.log('Connected to MongoDB Atlas');
-        } else {
-            await mongoose.connect(localUri);
-            console.log('Connected to local MongoDB');
-        }
+        const connectionUri = uri || localUri;
+        await mongoose.connect(connectionUri);
+        console.log(`Connected to MongoDB: ${uri ? 'Atlas' : 'Local'}`);
     } catch (err) {
-        console.error('Atlas connection failed, trying local MongoDB...');
-        try {
-            await mongoose.connect(localUri);
-            console.log('Connected to local MongoDB');
-        } catch (localErr) {
-            console.error('Local MongoDB also failed:', localErr.message);
-        }
+        console.error('MongoDB connection failed:', err.message);
+        process.exit(1);
     }
 };
 
