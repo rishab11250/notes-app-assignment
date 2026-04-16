@@ -54,4 +54,15 @@ const replaceNote = async(req,res) =>{
         res.status(500).json({success: false, message: "Error replacing note", data: err});
     }
 }
-module.exports = { createNote, createBulkNotes, getAllNotes, getNotesById, replaceNote };
+
+const updateSpecificFields = async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const updateData = req.body;
+        const note = await Note.findByIdAndUpdate(id, updateData, {new: true, runValidators: true});
+        res.status(200).json({success: true, message: "Note updated successfully", data: note});
+    }catch(err){
+        res.status(500).json({success: false, message: "Error updating note", data: err});
+    }
+}
+module.exports = { createNote, createBulkNotes, getAllNotes, getNotesById, replaceNote, updateSpecificFields };
